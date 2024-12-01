@@ -23,5 +23,5 @@ Make sure the following software is installed:
 
 1. *Clone the Repository*
    ```bash
-   [[git clone https://github.com/your-repository.git](https://github.com/Tahira-Fatimah/CV_OMR.git)](https://github.com/Tahira-Fatimah/CV_OMR.git)
+   [git clone https://github.com/Tahira-Fatimah/CV_Automatic_Bubble_Sheet_Grading.git]
 2. *Run python file 'app.py' using command 'python app.py'*
