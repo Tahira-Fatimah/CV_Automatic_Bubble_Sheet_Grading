@@ -8,28 +8,30 @@
 </head>
 <body>
   <div class="splash-screen">
-    <!-- Left content -->
+    <!-- Left content (Title and Upload Form) -->
     <div class="splash-content">
       <h1>OMR Image Processing</h1>
-      <p>Upload an image, process it, and get results seamlessly!</p>
-      <div class="button-group">
-        <button onclick="document.getElementById('imageInput').click()">Upload Image</button>
-        <button onclick="runScript()">Run Script</button>
-      </div>
-      <form id="imageForm" enctype="multipart/form-data" style="display: none;">
+      <p>Upload an image to process and submit the MCQ answers.</p>
+      
+      <form id="imageForm" enctype="multipart/form-data" method="POST">
         <input type="file" id="imageInput" name="image" accept="image/*" required>
+        <div class="button-group">
+          <button type="submit">Upload Image</button>
+        </div>
       </form>
     </div>
-    <!-- Right image -->
+
+    <!-- Right Image Container (Optional Image) -->
     <div class="splash-image">
-      <img src="/static/Images/bubblesheet.png" alt="Bubble Sheet" />
+      <img src="/static/Images/bubblesheet.png" alt="Placeholder Image" />
     </div>
   </div>
 
   <script>
     // Handle the image upload
-    document.getElementById('imageInput').addEventListener('change', function(event) {
-      let formData = new FormData(document.getElementById('imageForm'));
+    document.getElementById('imageForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      let formData = new FormData(this);
 
       fetch('/upload', {
         method: 'POST',
@@ -39,43 +41,10 @@
       .then(data => {
         console.log(data);
         alert('Image uploaded successfully');
+        window.location.href = '/answer-key';  // Redirect to the answer key page
       })
       .catch(error => console.error('Error:', error));
     });
-
-    // Trigger the script when the "Run Script" button is clicked
-    function runScript() {
-      fetch('/run-script', {
-        method: 'GET',
-      })
-      .then(response => {
-        // Check if the response is successful (status code 2xx)
-        if (response.ok) {
-          return response.json();  // Parse JSON if the response is successful
-        } else {
-          // Handle non-OK responses (e.g., 400 or 500 errors)
-          return response.json().then(errorData => {
-            throw new Error(errorData.error || 'Unknown error');
-          });
-        }
-      })
-      .then(data => {
-        // If the script executed successfully
-        if (data.message) {
-          alert('Script executed successfully!');
-          // Optionally, redirect to a success page or update the DOM with the result
-          window.location.href = '/success?output=' + encodeURIComponent(data.output);  // Redirect to success page
-        } else {
-          alert('Error: ' + data.error);
-        }
-      })
-      .catch(error => {
-        // Handle any unexpected errors
-        console.error('Error:', error);
-        alert('An unexpected error occurred: ' + error.message);
-      });
-    }
-
   </script>
 </body>
 </html>

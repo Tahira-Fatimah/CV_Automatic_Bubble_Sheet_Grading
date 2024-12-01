@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Answer Key</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="splash-screen">
+    <!-- Left content (Title and Answer Key Form) -->
+    <div class="splash-content">
+      <h1>Enter Answer Key</h1>
+      <p>Please select the correct answers for the 10 MCQs.</p>
+
+      <form id="answerForm" method="POST">
+        <!-- MCQ Inputs -->
+        <div class="mcq-group">
+          <label for="mcq1">1. Question 1:</label>
+          <select name="mcq1" id="mcq1" required>
+            <option value= 0 >A</option>
+            <option value= 1 >B</option>
+            <option value= 2 >C</option>
+            <option value= 3 >D</option>
+          </select>
+
+          <label for="mcq2">2. Question 2:</label>
+          <select name="mcq2" id="mcq2" required>
+            <option value= 0 >A</option>
+            <option value= 1 >B</option>
+            <option value= 2 >C</option>
+            <option value= 3 >D</option>
+          </select>
+
+          <label for="mcq2">2. Question 3:</label>
+          <select name="mcq3" id="mcq3" required>
+            <option value= 0 >A</option>
+            <option value= 1 >B</option>
+            <option value= 2 >C</option>
+            <option value= 3 >D</option>
+          </select>
+
+          <label for="mcq2">2. Question 4:</label>
+          <select name="mcq4" id="mcq4" required>
+            <option value= 0 >A</option>
+            <option value= 1 >B</option>
+            <option value= 2 >C</option>
+            <option value= 3 >D</option>
+          </select>
+
+          <label for="mcq2">2. Question 5:</label>
+          <select name="mcq5" id="mcq5" required>
+            <option value= 0 >A</option>
+            <option value= 1 >B</option>
+            <option value= 2 >C</option>
+            <option value= 3 >D</option>
+          </select>
+
+          <label for="mcq2">2. Question 6:</label>
+          <select name="mcq6" id="mcq6" required>
+            <option value= 0 >A</option>
+            <option value= 1 >B</option>
+            <option value= 2 >C</option>
+            <option value= 3 >D</option>
+          </select>
+
+          <label for="mcq2">2. Question 7:</label>
+          <select name="mcq7" id="mcq7" required>
+            <option value= 0 >A</option>
+            <option value= 1 >B</option>
+            <option value= 2 >C</option>
+            <option value= 3 >D</option>
+          </select>
+
+          <label for="mcq2">2. Question 8:</label>
+          <select name="mcq8" id="mcq8" required>
+            <option value= 0 >A</option>
+            <option value= 1 >B</option>
+            <option value= 2 >C</option>
+            <option value= 3 >D</option>
+          </select>
+
+          <label for="mcq2">2. Question 9:</label>
+          <select name="mcq9" id="mcq9" required>
+            <option value= 0 >A</option>
+            <option value= 1 >B</option>
+            <option value= 2 >C</option>
+            <option value= 3 >D</option>
+          </select>
+
+          <label for="mcq2">2. Question 10:</label>
+          <select name="mcq10" id="mcq10" required>
+            <option value= 0 >A</option>
+            <option value= 1 >B</option>
+            <option value= 2 >C</option>
+            <option value= 3 >D</option>
+          </select>
+
+
+
+          <!-- Add more MCQs as needed -->
+
+        </div>
+
+        <div class="button-group">
+          <button type="submit">Submit Answer Key</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Right Image Container (Optional Image) -->
+    <div class="splash-image">
+      <img src="/static/Images/bubblesheet.png" alt="Placeholder Image" />
+    </div>
+  </div>
+
+  <script>
+    // Handle form submission for answer key
+    document.getElementById('answerForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      let formData = new FormData(this);
+
+      fetch('/submit-answer-key', {
+        method: 'POST',
+        body: formData,
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        alert('Answer key submitted successfully');
+        runScript();
+      })
+      .catch(error => console.error('Error:', error));
+    });
+
+    function runScript() {
+    fetch('/run-script', {
+      method: 'GET',
+    })
+    .then(response => {
+      // Check if the response is successful (status code 2xx)
+      if (response.ok) {
+        return response.json();  // Parse JSON if the response is successful
+      } else {
+        // Handle non-OK responses (e.g., 400 or 500 errors)
+        return response.json().then(errorData => {
+          throw new Error(errorData.error || 'Unknown error');
+        });
+      }
+    })
+    .then(data => {
+      // If the script executed successfully
+      if (data.message) {
+        alert('Script executed successfully!');
+        // Optionally, redirect to a success page or update the DOM with the result
+        window.location.href = '/success?output=' + encodeURIComponent(data.output);  // Redirect to success page
+      } else {
+        alert('Error: ' + data.error);
+      }
+    })
+    .catch(error => {
+      // Handle any unexpected errors
+      console.error('Error:', error);
+      alert('An unexpected error occurred: ' + error.message);
+    });
+  }
+
+  </script>
+</body>
+</html>
+

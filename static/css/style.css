@@ -24,7 +24,7 @@ body {
   animation: fadeIn 1s ease-in-out;
 }
 
-/* Left content */
+/* Left content (forms) */
 .splash-content {
   flex: 1;
   padding: 2rem;

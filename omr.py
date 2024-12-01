@@ -1,3 +1,5 @@
+import ast
+
 from imutils.perspective import four_point_transform
 from imutils import contours
 import numpy as np
@@ -18,8 +20,21 @@ ANSWER_KEY = {
 # image_path = "omr_test_01-3.png" 
 parser = argparse.ArgumentParser(description="Process OMR image for answer detection.")
 parser.add_argument("image_path", help="Path to the image file to process", type=str)
+parser.add_argument("mcq_answers", help="Answer key in dictionary format", type=str)
 args = parser.parse_args()
 
+try:
+    # Convert the string argument to a dictionary using ast.literal_eval
+    ANSWER_KEY = ast.literal_eval(args.mcq_answers)
+    
+    # Ensure it's a dictionary
+    if not isinstance(ANSWER_KEY, dict):
+        raise ValueError("mcq_answer should be a valid dictionary.")
+    print("Parsed MCQ Answer Key:", ANSWER_KEY)
+except Exception as e:
+    print("Error parsing mcq_answer:", e)
+
+print(ANSWER_KEY)
 # Use the provided image path
 image_path = args.image_path
 image = cv2.imread(image_path)
