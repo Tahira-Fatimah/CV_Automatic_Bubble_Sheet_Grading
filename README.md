@@ -17,6 +17,15 @@ Make sure the following software is installed:
 - Python 
 - pip (Python package manager)
 
+## Requirements
+- pip install Flask
+- pip install Werkzeug
+- pip install numpy
+- pip install imutils
+- pip install opencv-python
+- pip install scipy
+
+
 ---
 
 ## Installation
