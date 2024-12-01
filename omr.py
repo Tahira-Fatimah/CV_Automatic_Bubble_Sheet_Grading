@@ -121,5 +121,5 @@ print("output_image.png")
 
 # cv2.imshow("Original", image)
 # cv2.imshow("Exam", paper)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()

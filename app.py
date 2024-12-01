@@ -41,31 +41,40 @@ def upload_file():
     return jsonify({"error": "File not allowed"})
 
 
-
 @app.route('/run-script', methods=['GET'])
 def run_script():
     try:
+        # Check uploaded files in the directory
         uploaded_files = os.listdir(app.config['UPLOAD_FOLDER'])
         if not uploaded_files:
-            return jsonify({"error": "No files found in the upload directory"})
+            return jsonify({"error": "No files found in the upload directory"}), 400
 
-        # Sort files by modification time and take the most recent one
+        # Sort the files by modification time and select the most recent one
         uploaded_files.sort(key=lambda x: os.path.getmtime(os.path.join(app.config['UPLOAD_FOLDER'], x)), reverse=True)
         image_filename = uploaded_files[0]
         image_path = os.path.join(app.config['UPLOAD_FOLDER'], image_filename)
 
+        # Execute the script
         result = subprocess.run(['python', 'omr.py', image_path], capture_output=True, text=True)
 
-        print(f"stdout: {result.stdout}")
-        print(f"stderr: {result.stderr}")
-        
+        # Check if the script executed successfully
         if result.returncode == 0:
-            return jsonify({"message": "Script executed successfully!", "output": result.stdout})
+            # Strip any extra newlines from the output
+            output = result.stdout.strip()
+            return jsonify({"message": "Script executed successfully", "output": output}), 200
         else:
-            return jsonify({"error": "Script execution failed", "output": result.stderr})
+            return jsonify({"error": "Script execution failed", "output": result.stderr}), 500
 
     except Exception as e:
-        return jsonify({"error": str(e)})
+        # Handle any unexpected errors and return a 500 error
+        return jsonify({"error": f"Unexpected error occurred: {str(e)}"}), 500
+
+@app.route('/success')
+def success():
+    output = request.args.get('output', 'No output available')
+    print(f"Output received in success route: {output}")
+    return render_template("success.html",output = output)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
