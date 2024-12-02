@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OMR Image Processing</title>
+</head>
+<body>
+
+  <h1>OMR Image Processing</h1>
+
+  <!-- Image upload form -->
+  <form id="imageForm" enctype="multipart/form-data">
+    <input type="file" id="imageInput" name="image" accept="image/*" required>
+    <button type="submit">Upload Image</button>
+  </form>
+
+  <br>
+
+  <!-- Button to trigger Python script -->
+  <button id="processButton" onclick="runScript()">Run Script</button>
+
+  <br><br>
+  <div id="result"></div>
+
+  <script>
+    // Handle the image upload
+    document.getElementById('imageForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      let formData = new FormData(this);
+
+      fetch('/upload', {
+        method: 'POST',
+        body: formData,
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        alert('Image uploaded successfully');
+      })
+      .catch(error => console.error('Error:', error));
+    });
+
+    // Trigger the script when the "Run Script" button is clicked
+    function runScript() {
+      fetch('/run-script', {
+        method: 'GET',
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        alert('Script executed successfully!');
+      })
+      .catch(error => console.error('Error:', error));
+    }
+  </script>
+</body>
+</html>
