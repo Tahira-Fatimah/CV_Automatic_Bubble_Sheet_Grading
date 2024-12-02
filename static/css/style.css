@@ -1,4 +1,4 @@
-/* General styles */
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -11,12 +11,12 @@ body {
   overflow: hidden;
 }
 
-/* Splash screen container */
+
 .splash-screen {
   display: flex;
   flex-direction: row;
   width: 80%;
-  height: 80%;
+  height: 90%;
   background: #333333;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   border-radius: 20px;
@@ -24,7 +24,6 @@ body {
   animation: fadeIn 1s ease-in-out;
 }
 
-/* Left content (forms) */
 .splash-content {
   flex: 1;
   padding: 2rem;
@@ -36,17 +35,17 @@ body {
 }
 
 .splash-content h1 {
-  font-size: 3rem;
-  margin-bottom: 1rem;
+  font-size: 2rem;
+  margin-bottom: 0.8rem;
 }
 
 .splash-content p {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
+  font-size: 1rem;
+  margin-bottom: 1rem;
   text-align: center;
 }
 
-/* Buttons styling */
+
 .button-group button {
   background: #1e88e5;
   color: white;
@@ -64,7 +63,7 @@ body {
   background: #0d47a1;
 }
 
-/* Right image container */
+
 .splash-image {
   flex: 1;
   display: flex;
@@ -81,7 +80,7 @@ body {
   animation: slideInRight 1s ease-out;
 }
 
-/* Keyframes for animations */
+
 @keyframes fadeIn {
   from {
     opacity: 0;

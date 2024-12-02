@@ -8,114 +8,145 @@
 </head>
 <body>
   <div class="splash-screen">
-    <!-- Left content (Title and Answer Key Form) -->
     <div class="splash-content">
       <h1>Enter Answer Key</h1>
       <p>Please select the correct answers for the 10 MCQs.</p>
 
       <form id="answerForm" method="POST">
-        <!-- MCQ Inputs -->
-        <div class="mcq-group">
+        <div class="mcq-group" style="display: flex; flex-direction: column; gap: 5px;">
           <label for="mcq1">1. Question 1:</label>
-          <select name="mcq1" id="mcq1" required>
-            <option value= 0 >A</option>
-            <option value= 1 >B</option>
-            <option value= 2 >C</option>
-            <option value= 3 >D</option>
-          </select>
+          <div>
+            <input type="radio" name="mcq1" value="0" id="mcq1_A" required checked>
+            <label for="mcq1_A">A</label>
+            <input type="radio" name="mcq1" value="1" id="mcq1_B">
+            <label for="mcq1_B">B</label>
+            <input type="radio" name="mcq1" value="2" id="mcq1_C">
+            <label for="mcq1_C">C</label>
+            <input type="radio" name="mcq1" value="3" id="mcq1_D">
+            <label for="mcq1_D">D</label>
+          </div>
 
           <label for="mcq2">2. Question 2:</label>
-          <select name="mcq2" id="mcq2" required>
-            <option value= 0 >A</option>
-            <option value= 1 >B</option>
-            <option value= 2 >C</option>
-            <option value= 3 >D</option>
-          </select>
+          <div>
+            <input type="radio" name="mcq2" value="0" id="mcq2_A" required checked>
+            <label for="mcq2_A">A</label>
+            <input type="radio" name="mcq2" value="1" id="mcq2_B">
+            <label for="mcq2_B">B</label>
+            <input type="radio" name="mcq2" value="2" id="mcq2_C">
+            <label for="mcq2_C">C</label>
+            <input type="radio" name="mcq2" value="3" id="mcq2_D">
+            <label for="mcq2_D">D</label>
+          </div>
 
-          <label for="mcq2">2. Question 3:</label>
-          <select name="mcq3" id="mcq3" required>
-            <option value= 0 >A</option>
-            <option value= 1 >B</option>
-            <option value= 2 >C</option>
-            <option value= 3 >D</option>
-          </select>
+          <label for="mcq3">3. Question 3:</label>
+          <div>
+            <input type="radio" name="mcq3" value="0" id="mcq3_A" required checked>
+            <label for="mcq3_A">A</label>
+            <input type="radio" name="mcq3" value="1" id="mcq3_B">
+            <label for="mcq3_B">B</label>
+            <input type="radio" name="mcq3" value="2" id="mcq3_C">
+            <label for="mcq3_C">C</label>
+            <input type="radio" name="mcq3" value="3" id="mcq3_D">
+            <label for="mcq3_D">D</label>
+          </div>
 
-          <label for="mcq2">2. Question 4:</label>
-          <select name="mcq4" id="mcq4" required>
-            <option value= 0 >A</option>
-            <option value= 1 >B</option>
-            <option value= 2 >C</option>
-            <option value= 3 >D</option>
-          </select>
+          <label for="mcq4">4. Question 4:</label>
+          <div>
+            <input type="radio" name="mcq4" value="0" id="mcq4_A" required checked>
+            <label for="mcq4_A">A</label>
+            <input type="radio" name="mcq4" value="1" id="mcq4_B">
+            <label for="mcq4_B">B</label>
+            <input type="radio" name="mcq4" value="2" id="mcq4_C">
+            <label for="mcq4_C">C</label>
+            <input type="radio" name="mcq4" value="3" id="mcq4_D">
+            <label for="mcq4_D">D</label>
+          </div>
 
-          <label for="mcq2">2. Question 5:</label>
-          <select name="mcq5" id="mcq5" required>
-            <option value= 0 >A</option>
-            <option value= 1 >B</option>
-            <option value= 2 >C</option>
-            <option value= 3 >D</option>
-          </select>
+          <label for="mcq5">5. Question 5:</label>
+          <div>
+            <input type="radio" name="mcq5" value="0" id="mcq5_A" required checked>
+            <label for="mcq5_A">A</label>
+            <input type="radio" name="mcq5" value="1" id="mcq5_B">
+            <label for="mcq5_B">B</label>
+            <input type="radio" name="mcq5" value="2" id="mcq5_C">
+            <label for="mcq5_C">C</label>
+            <input type="radio" name="mcq5" value="3" id="mcq5_D">
+            <label for="mcq5_D">D</label>
+          </div>
 
-          <label for="mcq2">2. Question 6:</label>
-          <select name="mcq6" id="mcq6" required>
-            <option value= 0 >A</option>
-            <option value= 1 >B</option>
-            <option value= 2 >C</option>
-            <option value= 3 >D</option>
-          </select>
+          <label for="mcq6">6. Question 6:</label>
+          <div>
+            <input type="radio" name="mcq6" value="0" id="mcq6_A" required checked>
+            <label for="mcq6_A">A</label>
+            <input type="radio" name="mcq6" value="1" id="mcq6_B">
+            <label for="mcq6_B">B</label>
+            <input type="radio" name="mcq6" value="2" id="mcq6_C">
+            <label for="mcq6_C">C</label>
+            <input type="radio" name="mcq6" value="3" id="mcq6_D">
+            <label for="mcq6_D">D</label>
+          </div>
 
-          <label for="mcq2">2. Question 7:</label>
-          <select name="mcq7" id="mcq7" required>
-            <option value= 0 >A</option>
-            <option value= 1 >B</option>
-            <option value= 2 >C</option>
-            <option value= 3 >D</option>
-          </select>
+          <label for="mcq7">7. Question 7:</label>
+          <div>
+            <input type="radio" name="mcq7" value="0" id="mcq7_A" required checked>
+            <label for="mcq7_A">A</label>
+            <input type="radio" name="mcq7" value="1" id="mcq7_B">
+            <label for="mcq7_B">B</label>
+            <input type="radio" name="mcq7" value="2" id="mcq7_C">
+            <label for="mcq7_C">C</label>
+            <input type="radio" name="mcq7" value="3" id="mcq7_D">
+            <label for="mcq7_D">D</label>
+          </div>
 
-          <label for="mcq2">2. Question 8:</label>
-          <select name="mcq8" id="mcq8" required>
-            <option value= 0 >A</option>
-            <option value= 1 >B</option>
-            <option value= 2 >C</option>
-            <option value= 3 >D</option>
-          </select>
+          <label for="mcq8">8. Question 8:</label>
+          <div>
+            <input type="radio" name="mcq8" value="0" id="mcq8_A" required checked>
+            <label for="mcq8_A">A</label>
+            <input type="radio" name="mcq8" value="1" id="mcq8_B">
+            <label for="mcq8_B">B</label>
+            <input type="radio" name="mcq8" value="2" id="mcq8_C">
+            <label for="mcq8_C">C</label>
+            <input type="radio" name="mcq8" value="3" id="mcq8_D">
+            <label for="mcq8_D">D</label>
+          </div>
 
-          <label for="mcq2">2. Question 9:</label>
-          <select name="mcq9" id="mcq9" required>
-            <option value= 0 >A</option>
-            <option value= 1 >B</option>
-            <option value= 2 >C</option>
-            <option value= 3 >D</option>
-          </select>
+          <label for="mcq9">9. Question 9:</label>
+          <div>
+            <input type="radio" name="mcq9" value="0" id="mcq9_A" required checked>
+            <label for="mcq9_A">A</label>
+            <input type="radio" name="mcq9" value="1" id="mcq9_B">
+            <label for="mcq9_B">B</label>
+            <input type="radio" name="mcq9" value="2" id="mcq9_C">
+            <label for="mcq9_C">C</label>
+            <input type="radio" name="mcq9" value="3" id="mcq9_D">
+            <label for="mcq9_D">D</label>
+          </div>
 
-          <label for="mcq2">2. Question 10:</label>
-          <select name="mcq10" id="mcq10" required>
-            <option value= 0 >A</option>
-            <option value= 1 >B</option>
-            <option value= 2 >C</option>
-            <option value= 3 >D</option>
-          </select>
-
-
-
-          <!-- Add more MCQs as needed -->
-
+          <label for="mcq10">10. Question 10:</label>
+          <div>
+            <input type="radio" name="mcq10" value="0" id="mcq10_A" required checked>
+            <label for="mcq10_A">A</label>
+            <input type="radio" name="mcq10" value="1" id="mcq10_B">
+            <label for="mcq10_B">B</label>
+            <input type="radio" name="mcq10" value="2" id="mcq10_C">
+            <label for="mcq10_C">C</label>
+            <input type="radio" name="mcq10" value="3" id="mcq10_D">
+            <label for="mcq10_D">D</label>
+          </div>
         </div>
-
+        
         <div class="button-group">
           <button type="submit">Submit Answer Key</button>
         </div>
       </form>
     </div>
 
-    <!-- Right Image Container (Optional Image) -->
     <div class="splash-image">
       <img src="/static/Images/bubblesheet.png" alt="Placeholder Image" />
     </div>
   </div>
 
   <script>
-    // Handle form submission for answer key
     document.getElementById('answerForm').addEventListener('submit', function(event) {
       event.preventDefault();
       let formData = new FormData(this);
@@ -133,38 +164,25 @@
       .catch(error => console.error('Error:', error));
     });
 
+    
     function runScript() {
-    fetch('/run-script', {
-      method: 'GET',
-    })
-    .then(response => {
-      // Check if the response is successful (status code 2xx)
-      if (response.ok) {
-        return response.json();  // Parse JSON if the response is successful
-      } else {
-        // Handle non-OK responses (e.g., 400 or 500 errors)
-        return response.json().then(errorData => {
-          throw new Error(errorData.error || 'Unknown error');
+        fetch('/run-script', {
+            method: 'GET',
+        })
+        .then(response => {
+            if (response.ok) {
+            window.location.href = response.url;
+            } else {
+            return response.json().then(errorData => {
+                throw new Error(errorData.error || 'Unknown error');
+            });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An unexpected error occurred: ' + error.message);
         });
-      }
-    })
-    .then(data => {
-      // If the script executed successfully
-      if (data.message) {
-        alert('Script executed successfully!');
-        // Optionally, redirect to a success page or update the DOM with the result
-        window.location.href = '/success?output=' + encodeURIComponent(data.output);  // Redirect to success page
-      } else {
-        alert('Error: ' + data.error);
-      }
-    })
-    .catch(error => {
-      // Handle any unexpected errors
-      console.error('Error:', error);
-      alert('An unexpected error occurred: ' + error.message);
-    });
-  }
-
+    }
   </script>
 </body>
 </html>

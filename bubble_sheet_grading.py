@@ -13,9 +13,9 @@ def calculate_threshold(radius):
     return 38.89 * radius - 180.57
 
 
-ANSWER_KEY = {
-    0: 1, 1: 3, 2: 1, 3: 0, 4: 2, 5: 0, 6: 0, 7:0, 8:0, 9:0
-}
+# ANSWER_KEY = {
+#     0: 1, 1: 3, 2: 1, 3: 0, 4: 2, 5: 0, 6: 0, 7:0, 8:0, 9:0
+# }
 
 # image_path = "omr_test_01-3.png" 
 parser = argparse.ArgumentParser(description="Process OMR image for answer detection.")
@@ -23,19 +23,8 @@ parser.add_argument("image_path", help="Path to the image file to process", type
 parser.add_argument("mcq_answers", help="Answer key in dictionary format", type=str)
 args = parser.parse_args()
 
-try:
-    # Convert the string argument to a dictionary using ast.literal_eval
-    ANSWER_KEY = ast.literal_eval(args.mcq_answers)
-    
-    # Ensure it's a dictionary
-    if not isinstance(ANSWER_KEY, dict):
-        raise ValueError("mcq_answer should be a valid dictionary.")
-    print("Parsed MCQ Answer Key:", ANSWER_KEY)
-except Exception as e:
-    print("Error parsing mcq_answer:", e)
+ANSWER_KEY = ast.literal_eval(args.mcq_answers)
 
-print(ANSWER_KEY)
-# Use the provided image path
 image_path = args.image_path
 image = cv2.imread(image_path)
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -111,7 +100,11 @@ for (question_number, i) in enumerate(np.arange(0, len(questionCnts), answers_pe
         cv2.drawContours(paper, [contours_of_one_question_in_row[correct_answer_index]], -1, color, 3)
         score -= 0.25 # -0.25 if more than one circles filled
         continue
-        
+
+    elif filled_circles_count == 0:
+        cv2.drawContours(paper, [contours_of_one_question_in_row[correct_answer_index]], -1, color, 3)
+        continue
+
     if correct_answer_index != -1 and correct_answer_index < len(contours_of_one_question_in_row):
         if correct_answer_index == bubbled[1]:
             color = (0, 255, 0)  # Green color for correct answer
@@ -123,7 +116,6 @@ for (question_number, i) in enumerate(np.arange(0, len(questionCnts), answers_pe
 
 
 num_questions = len(ANSWER_KEY)
-cv2.putText(paper, f"Score: {score:.2f}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
 output_folder = "static/output_images"
 if not os.path.exists(output_folder):
     os.makedirs(output_folder)
@@ -132,9 +124,5 @@ if not os.path.exists(output_folder):
 output_image_path = os.path.join(output_folder, "output_image.png")
 cv2.imwrite(output_image_path, paper)
 
+print(score)
 print("output_image.png")
-
-# cv2.imshow("Original", image)
-# cv2.imshow("Exam", paper)
-# cv2.waitKey(0)
-# cv2.destroyAllWindows()

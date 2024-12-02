@@ -3,15 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OMR Image Processing</title>
+  <title>Bubble Sheet Grading</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
   <div class="splash-screen">
-    <!-- Left content (Title and Upload Form) -->
     <div class="splash-content">
-      <h1>OMR Image Processing</h1>
-      <p>Upload an image to process and submit the MCQ answers.</p>
+      <h1>Bubble Sheet Grading</h1>
+      <p>Upload an image to process</p>
       
       <form id="imageForm" enctype="multipart/form-data" method="POST">
         <input type="file" id="imageInput" name="image" accept="image/*" required>
@@ -20,8 +19,6 @@
         </div>
       </form>
     </div>
-
-    <!-- Right Image Container (Optional Image) -->
     <div class="splash-image">
       <img src="/static/Images/bubblesheet.png" alt="Placeholder Image" />
     </div>
@@ -41,7 +38,7 @@
       .then(data => {
         console.log(data);
         alert('Image uploaded successfully');
-        window.location.href = '/answer-key';  // Redirect to the answer key page
+        window.location.href = '/answer-key'; 
       })
       .catch(error => console.error('Error:', error));
     });

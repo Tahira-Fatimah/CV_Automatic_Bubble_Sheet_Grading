@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OMR Processing Success</title>
+  <title>Result</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -41,19 +41,31 @@
       text-decoration: none;
     }
 
+    .score {
+      font-size: 2rem;
+      font-weight: bold;
+      background-color: #e8f5e9; /* Light green background */
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+      display: inline-block;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
     .back-button:hover {
       background-color: #1e88e5;
     }
+
   </style>
 </head>
 <body>
-  <h1>OMR Processing Completed Successfully!</h1>
-  <p>Here is the output image generated from the OMR process:</p>
-  
-  <!-- Display the image -->
+  <h1>Result</h1>
   <img src="{{ url_for('static', filename='output_images/' + output) }}" alt="Output Image">
-
-  <!-- Back Button to go home -->
+  <div>
+    <p class="score">
+      Score: {{ score }}
+    </p>
+  </div>
   <a href="/" class="back-button">Back to Home</a>
 </body>
 </html>

@@ -3,13 +3,12 @@ import os
 from werkzeug.utils import secure_filename
 import subprocess
 
-mcq_answers = {}
-
 app = Flask(__name__)
 
 UPLOAD_FOLDER = 'static/uploads/'
 OUTPUT_FOLDER = 'static/output_images/'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+mcq_answers = {}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['OUTPUT_FOLDER'] = OUTPUT_FOLDER
@@ -41,6 +40,7 @@ def upload_file():
     
     return jsonify({"error": "File not allowed"})
 
+#run the omr script adter the submit answer ket function is successful
 @app.route('/run-script', methods=['GET'])
 def run_script():
     try:
@@ -52,39 +52,38 @@ def run_script():
         image_filename = uploaded_files[0]
         image_path = os.path.join(app.config['UPLOAD_FOLDER'], image_filename)
         mcq_answers_str = str(mcq_answers)
-        result = subprocess.run(['python', 'omr.py', image_path,mcq_answers_str], capture_output=True, text=True)
-        print("gfgf" + result.stdout)
+        result = subprocess.run(['python', 'bubble_sheet_grading.py', image_path, mcq_answers_str], capture_output=True, text=True)
+        output = result.stdout.strip()
+        output_lines = output.splitlines()
+        output_file_path = output_lines[1]
+        score = output_lines[0]
         if result.returncode == 0:
-            return redirect(url_for('answer_key'))
+            return redirect(url_for("success", output=output_file_path, score = score))
         else:
             return jsonify({"error": "Script execution failed", "output": result.stderr})
 
     except Exception as e:
         return jsonify({"error": str(e)})
 
+
+#render answer_key html file when we click on upload image in index.html
 @app.route('/answer-key', methods=['GET', 'POST'])
 def answer_key():
-    if request.method == 'POST':
-        answers = {}
-        for i in range(1, 11):
-            answer = request.form.get(f'question_{i}')
-            answers[f'question_{i}'] = answer
-        print(answers)  # Process the answers here (e.g., store or validate them)
-        return redirect(url_for('success', output="Answers submitted successfully!"))
-    
     return render_template('answer_key.html')
+
 
 @app.route('/success')
 def success():
     output = request.args.get('output', 'No output available')
-    return render_template('success.html', output=output)
+    score = request.args.get('score', 'no score')
+    print("Output here ", output)
+    return render_template('success.html', output=output, score = score)
 
-# Route to handle the form submission
+
 @app.route('/submit-answer-key', methods=['POST'])
 def submit_answer_key():
 
     global mcq_answers
-    # Extract data from the form submission
     mcq_answers = {
         0: int(request.form.get('mcq1')),
         1: int(request.form.get('mcq2')),
@@ -98,11 +97,7 @@ def submit_answer_key():
         9: int(request.form.get('mcq10'))
     }
 
-    # Print the answers (you can replace this with saving the answers to a database or other logic)
     print("Received Answer Key:", mcq_answers)
-
-    # Return a JSON response indicating success
-    # return redirect(url_for('run_script'))
     return jsonify({
         'message': 'Answer key submitted successfully!',
         'received_data': mcq_answers
