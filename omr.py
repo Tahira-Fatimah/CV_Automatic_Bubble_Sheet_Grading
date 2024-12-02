@@ -122,7 +122,7 @@ cv2.imwrite(output_image_path, paper)
 
 print(f"Output image saved at: {output_image_path}")
 
-cv2.imshow("Original", image)
-cv2.imshow("Exam", paper)
+# cv2.imshow("Original", image)
+# cv2.imshow("Exam", paper)
 cv2.waitKey(0)
 cv2.destroyAllWindows()

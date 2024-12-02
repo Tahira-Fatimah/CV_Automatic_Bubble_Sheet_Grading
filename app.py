@@ -1,17 +1,15 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, redirect, url_for
 import os
 from werkzeug.utils import secure_filename
 import subprocess
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='.')
 
-# Set the folder where uploaded images will be saved
 UPLOAD_FOLDER = 'uploads/'
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# Check if file is an allowed image type
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
@@ -20,7 +18,6 @@ def allowed_file(filename):
 def home():
     return render_template("index.html")
 
-# Route to upload the image
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if 'image' not in request.files:
@@ -33,7 +30,6 @@ def upload_file():
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         
-        # Ensure the upload directory exists
         if not os.path.exists(app.config['UPLOAD_FOLDER']):
             os.makedirs(app.config['UPLOAD_FOLDER'])
         
@@ -47,7 +43,6 @@ def upload_file():
 @app.route('/run-script', methods=['GET'])
 def run_script():
     try:
-        # Get the latest uploaded file from the 'uploads' folder
         uploaded_files = os.listdir(app.config['UPLOAD_FOLDER'])
         if not uploaded_files:
             return jsonify({"error": "No files found in the upload directory"})
@@ -57,14 +52,13 @@ def run_script():
         image_filename = uploaded_files[0]
         image_path = os.path.join(app.config['UPLOAD_FOLDER'], image_filename)
 
-        # Run the script with the image path
         result = subprocess.run(['python', 'omr.py', image_path], capture_output=True, text=True)
 
-        # Log the script's output
         print(f"stdout: {result.stdout}")
         print(f"stderr: {result.stderr}")
         
         if result.returncode == 0:
+            # return redirect(url_for('show_image', filename=image_filename))
             return jsonify({"message": "Script executed successfully!", "output": result.stdout})
         else:
             return jsonify({"error": "Script execution failed", "output": result.stderr})
@@ -73,7 +67,15 @@ def run_script():
         return jsonify({"error": str(e)})
 
 
+@app.route('/show-image/<filename>', methods=['GET'])
+def show_image(filename):
+    
+    image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    if not os.path.exists(image_path):
+        return jsonify({"error": "Image not found"})
 
+    print("Rendering")
+    return render_template('show_image.html', image_path=f"uploads/{filename}")
 
 if __name__ == '__main__':
     app.run(debug=True)
