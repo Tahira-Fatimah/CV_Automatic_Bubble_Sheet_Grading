@@ -3,12 +3,14 @@ import os
 from werkzeug.utils import secure_filename
 import subprocess
 
-app = Flask(__name__, static_folder='.')
+app = Flask(__name__)
 
-UPLOAD_FOLDER = 'uploads/'
+UPLOAD_FOLDER = 'static/uploads/'
+OUTPUT_FOLDER = 'static/output_images/'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['OUTPUT_FOLDER'] = OUTPUT_FOLDER
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -58,24 +60,12 @@ def run_script():
         print(f"stderr: {result.stderr}")
         
         if result.returncode == 0:
-            # return redirect(url_for('show_image', filename=image_filename))
             return jsonify({"message": "Script executed successfully!", "output": result.stdout})
         else:
             return jsonify({"error": "Script execution failed", "output": result.stderr})
 
     except Exception as e:
         return jsonify({"error": str(e)})
-
-
-@app.route('/show-image/<filename>', methods=['GET'])
-def show_image(filename):
-    
-    image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    if not os.path.exists(image_path):
-        return jsonify({"error": "Image not found"})
-
-    print("Rendering")
-    return render_template('show_image.html', image_path=f"uploads/{filename}")
 
 if __name__ == '__main__':
     app.run(debug=True)

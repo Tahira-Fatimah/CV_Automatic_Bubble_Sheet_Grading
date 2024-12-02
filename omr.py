@@ -105,14 +105,11 @@ for (question_number, i) in enumerate(np.arange(0, len(questionCnts), answers_pe
         else:
             score -= 0.25 # -0.25 if wrong answet
         cv2.drawContours(paper, [contours_of_one_question_in_row[correct_answer_index]], -1, color, 3) #drawing contour on the original image
-        print(f"Score at this point = {score}")
-    else:
-        print(f"Warning: Question {question_number} has invalid answer index {correct_answer_index} or contours are missing.")
 
 
 num_questions = len(ANSWER_KEY)
 cv2.putText(paper, f"Score: {score:.2f}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
-output_folder = "output_images"
+output_folder = "static/output_images"
 if not os.path.exists(output_folder):
     os.makedirs(output_folder)
 
@@ -120,7 +117,7 @@ if not os.path.exists(output_folder):
 output_image_path = os.path.join(output_folder, "output_image.png")
 cv2.imwrite(output_image_path, paper)
 
-print(f"Output image saved at: {output_image_path}")
+print("output_image.png")
 
 # cv2.imshow("Original", image)
 # cv2.imshow("Exam", paper)
